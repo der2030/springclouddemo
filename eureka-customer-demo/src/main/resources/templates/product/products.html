@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<head >
+
+    <title>Spring Boot And JPA</title>
+    <th:block th:include="product/fragment/headfile :: head"></th:block>
+</head>
+<body>
+
+<div class="container">
+   <th:block th:include="product/fragment/header :: header"></th:block>
+   
+    <div th:if="${not #lists.isEmpty(products)}">
+        <h2>Product List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Product Name</th>
+                <th>Product Info</th>
+                <th>Stock</th>
+                <th>Buy Price</th>
+                <th>Sell Price</th>
+                <th>Discount</th>
+
+            </tr>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}"><a href="/product/${product.id}">Id</a></td>
+                <td th:text="${product.productname}">Product Name</td>
+                <td th:text="${product.productinfo}">Product Info</td>
+                <td th:text="${product.productstock}">Product Stock</td>
+                <td th:text="${product.productbuyprice}">Buy price</td>
+                <td th:text="${product.productsellprice}">Sell price</td>
+                <td th:text="${product.productdiscount}">Discount</td>
+
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+</body>
+</html>
