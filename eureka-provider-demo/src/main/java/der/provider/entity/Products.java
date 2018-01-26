@@ -1,6 +1,7 @@
 package der.provider.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
 * @FileName:Products
@@ -9,8 +10,8 @@ import javax.persistence.*;
 */
 @Entity
 @Table(name="gitdemo_products")
-public class Products {
-
+public class Products implements Serializable {
+    private static final long serialVersionUID = 1219258945649122515L;
     @Id
     @GeneratedValue
     private Long id;
@@ -26,6 +27,17 @@ public class Products {
     private double productsellprice;
     @Column(name="product_discount")
     private double productdiscount;
+
+    public Products(){}
+
+    public Products(String productname, String productinfo, int productstock, double productbuyprice, double productsellprice, double productdiscount) {
+        this.productname = productname;
+        this.productinfo = productinfo;
+        this.productstock = productstock;
+        this.productbuyprice = productbuyprice;
+        this.productsellprice = productsellprice;
+        this.productdiscount = productdiscount;
+    }
 
     public Long getId() {
         return id;
