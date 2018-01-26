@@ -3,10 +3,14 @@ package der.provider.service;
 import der.provider.entity.Products;
 import der.provider.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import org.springframework.cache.annotation.Cacheable;
 import javax.transaction.Transactional;
 
 /**
@@ -14,6 +18,7 @@ import javax.transaction.Transactional;
 * @Description:
 * @Author: Derrick Ye
 */
+@CacheConfig(cacheNames = "product")
 @Service
 @Transactional
 public class ProductService implements IProductService{
@@ -23,6 +28,7 @@ public class ProductService implements IProductService{
 
 
     @Override
+    @Cacheable(key="\"product_\"+#id")
     public Products findById(Long id) {
         if(id==null){
             return null;
@@ -31,6 +37,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    @Cacheable
     public Page<Products> findAll(Pageable pageable) {
         if(pageable==null){
             return null;
@@ -39,6 +46,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    @CachePut(key="\"product_\"+#products.id")
     public Products saveProduct(Products products) {
         if(products==null)
             return null;
@@ -46,6 +54,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    @CachePut(key="\"product_\"+#products.id")
     public Products updateProduct(Products products) {
         if(products==null)
             return null;
@@ -53,6 +62,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    @CacheEvict(key="\"product_\"+#id")
     public Boolean deleteProduct(Long id) {
         Boolean res=false;
         if(id!=null ){
